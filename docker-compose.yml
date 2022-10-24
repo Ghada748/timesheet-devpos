@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql/mysql-server:8.0
+    restart: unless-stopped
+    ports:
+     - 3307:3307
+    environment:
+     - MYSQL_ROOT_PASSWORD=pass
+     - MYSQL_DATABASE=achatdb
+     - MYSQL_USER=root
+     - MYSQL_PASSWORD=pass
+
+
+  spring_app:
+    image: ghassen007/achat
+    container_name: achatspring
+    restart: on-failure
+    environment:
+     - spring.datasource.url=jdbc:mysql://mysqldb:3306/achatdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    ports:
+     - 8089:8089
+    depends_on:
+     - mysqldb
+
+  angular_app:
+    image: anas1412/achatfront:1.0
+    container_name: achatangular
+    restart: on-failure
+    ports:
+     - 4200:80
+    depends_on:
+     - spring_app
