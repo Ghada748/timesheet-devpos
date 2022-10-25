@@ -20,7 +20,7 @@ services:
     environment:
      - spring.datasource.url=jdbc:mysql://mysqldb:3306/achatdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     ports:
-     - 8089:8089
+     - 8089:808
     depends_on:
      - mysqldb
                
